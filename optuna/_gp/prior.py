@@ -11,6 +11,8 @@ else:
     from optuna._imports import _LazyImport
 
     torch = _LazyImport("torch")
+import optuna.logging
+_logger = optuna.logging.get_logger(__name__)
 
 
 DEFAULT_MINIMUM_NOISE_VAR = 1e-6
@@ -30,7 +32,7 @@ def dim_scaled_log_normal_prior(gpr: gp.GPRegressor) -> torch.Tensor:
         Then, z ~ LogNormal(-2μ, 4σ²).
         """
         D = z.shape[0]
-        print(f"dim_scaled_log_normal_prior: D = {D}")
+        _logger.info(f"dim_scaled_log_normal_prior: D = {D}")
         mu_ell = math.log(math.sqrt(D)) + math.sqrt(2.0)
         sigma_ell = math.sqrt(3.0)
 
